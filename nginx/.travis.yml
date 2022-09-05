@@ -1,0 +1,13 @@
+sudo: required
+
+before_install: 
+  - docker build -f Dockerfile.dev -t react_multiapp ./client
+
+script: 
+  - docker run -e CI=true react_multiapp npm run test
+
+after_success: 
+  - docker build -f Dockerfile.dev -t react_multiapp_client ./client
+  - docker build -f Dockerfile.dev -t react_multiapp_worker ./worker
+  - docker build -f Dockerfile.dev -t react_multiapp_server ./server
+  - docker build -f Dockerfile.dev -t react_multiapp_nginx ./nginx
