@@ -1,7 +1,7 @@
 sudo: required
 
 before_install: 
-  - docker build -f Dockerfile.dev -t react_multiapp_client ./react_multiapp/client
+  - docker build -f Dockerfile.dev -t react_multiapp_client ./client
 
 script: 
   - docker run -e CI=true react_multiapp_client npm run test
