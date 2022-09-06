@@ -32,5 +32,5 @@ deploy:
   bucket_path: 'docker-multi'
   on:
     branch: main
-  access_key_id: $AWS_EB_ACCESS_KEY
-  secret_access_key: $AWS_EB_SECRET
+  access_key_id: $FULL_KEY
+  secret_access_key: $FULL_SECRET
