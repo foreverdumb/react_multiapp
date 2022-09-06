@@ -11,3 +11,8 @@ after_success:
   - cd ..; cd ./worker; docker build -f Dockerfile.dev -t react_multiapp_worker .
   - cd ..; cd ./server; docker build -f Dockerfile.dev -t react_multiapp_server .
   - cd ..; cd ./nginx; docker build -f Dockerfile.dev -t react_multiapp_nginx .
+  - echo "$DOCKER_HUB_PASS" | docker login -u "$DOCKER_ID" --password-stdin 
+  - docker push react_multiapp_client
+  - docker push react_multiapp_worker
+  - docker push react_multiapp_server
+  - docker push react_multiapp_nginx
