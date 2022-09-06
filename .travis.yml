@@ -1,18 +1,18 @@
 sudo: required
 
 before_install: 
-  - cd ./client; docker build -f Dockerfile.dev -t react_multiapp_client .
+  - cd ./client; docker build -f Dockerfile.dev -t home1docker1/react_multiapp_client .
 
 script: 
   - docker run -e CI=true react_multiapp_client npm run test
 
 after_success: 
-  - docker build -f Dockerfile.dev -t react_multiapp_client .
-  - cd ..; cd ./worker; docker build -f Dockerfile.dev -t react_multiapp_worker .
-  - cd ..; cd ./server; docker build -f Dockerfile.dev -t react_multiapp_server .
-  - cd ..; cd ./nginx; docker build -f Dockerfile.dev -t react_multiapp_nginx .
+  - docker build -f Dockerfile.dev -t home1docker1/react_multiapp_client .
+  - cd ..; cd ./worker; docker build -f Dockerfile.dev -t home1docker1/react_multiapp_worker .
+  - cd ..; cd ./server; docker build -f Dockerfile.dev -t home1docker1/react_multiapp_server .
+  - cd ..; cd ./nginx; docker build -f Dockerfile.dev -t home1docker1/react_multiapp_nginx .
   - echo "$DOCKER_HUB_PASS" | docker login -u "$DOCKER_ID" --password-stdin 
-  - docker push react_multiapp_client
-  - docker push react_multiapp_worker
-  - docker push react_multiapp_server
-  - docker push react_multiapp_nginx
+  - docker push home1docker1/react_multiapp_client
+  - docker push home1docker1/react_multiapp_worker
+  - docker push home1docker1/react_multiapp_server
+  - docker push home1docker1/react_multiapp_nginx
