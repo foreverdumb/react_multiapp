@@ -1,67 +1,36 @@
-version: '3.8'
+    version: "3.8"
 
-services:
+    services:
 
-  api:
-    build:
-      context: ./server
-      dockerfile: Dockerfile.dev
-    volumes:
-      - ./server:/usr/app
-      - /usr/app/node_modules
-    env_file:
-      - ./server/.env
-    depends_on:
-      - pg
-      - redis
-    restart: always
+      client:
+        image: "home1docker1/react_multiapp_client"
+        mem_limit: 128m
+        hostname: client
 
-  worker:
-    build:
-      context: ./worker
-      dockerfile: Dockerfile.dev
-    volumes:
-      - ./worker:/usr/app
-      - /usr/app/node_modules
-    env_file:
-      - ./worker/.env
-    depends_on:
-      - api
-      - redis
+      server:
+        image: "home1docker1/react_multiapp_server"
+        mem_limit: 128m
+        hostname: api
+        environment:
+          - REDIS_HOST=$REDIS_HOST
+          - REDIS_PORT=$REDIS_PORT
+          - PGUSER=$PGUSER
+          - PGHOST=$PGHOST
+          - PGDATABASE=$PGDATABASE
+          - PGPASSWORD=$PGPASSWORD
+          - PGPORT=$PGPORT
 
-  client:
-    build:
-      context: ./client
-      dockerfile: Dockerfile.dev
-    volumes:
-      - ./client:/usr/app
-      - /usr/app/node_modules
-    depends_on:
-      - api
-      - worker
-    restart: always
-    environment:
-      - WDS_SOCKET_PORT=0
+      worker:
+        image: "home1docker1/react_multiapp_worker"
+        mem_limit: 128m
+        hostname: worker
+        environment:
+          - REDIS_HOST=$REDIS_HOST
+          - REDIS_PORT=$REDIS_PORT
 
-  pg:
-    image: postgres:latest
-    environment:
-      - POSTGRES_USER=user
-      - POSTGRES_DB=postgres
-      - POSTGRES_PASSWORD=user
-    restart: always
-
-  redis:
-    image: redis:latest
-    restart: always
-
-  nginx:
-    build: 
-      context: ./nginx
-      dockerfile: Dockerfile.dev
-    depends_on:
-      - api
-      - client
-    ports:
-      - 8080:80
-    restart: always
+      nginx:
+        image: "home1docker1/react_multiapp_nginx"
+        mem_limit: 128m
+        hostname: nginx
+        ports:
+          - "80:80"
