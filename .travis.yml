@@ -25,11 +25,11 @@ after_success:
 
 deploy:
   provider: elasticbeanstalk
-  region: 'us-east-1'
-  app: 'multi-docker'
-  env: 'MultiDocker-env'
-  bucket_name: 'elasticbeanstalk-us-east-1-923445559289'
-  bucket_path: 'docker-multi'
+  region: 'eu-central-1'
+  app: 'react_multiapp'
+  env: 'Reactmultiapp-env'
+  bucket_name: 'elasticbeanstalk-eu-central-1-279955776817'
+  bucket_path: 'react_multiapp'
   on:
     branch: main
   access_key_id: $FULL_KEY
