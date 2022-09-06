@@ -27,4 +27,4 @@ deploy:
   on:
     branch: main
   access_key_id: $AWS_EB_ACCESS_KEY
-  secret_access_key: "$AWS_EB_SECRET"
+  secret_access_key: $AWS_EB_SECRET
