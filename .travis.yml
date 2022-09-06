@@ -12,10 +12,10 @@ after_success:
   - cd ..; cd ./server; docker build -f Dockerfile.dev -t home1docker1/react_multiapp_server:1.0.0  .
   - cd ..; cd ./nginx; docker build -f Dockerfile.dev -t home1docker1/react_multiapp_nginx:1.0.0  .
   - echo "$DOCKER_HUB_PASS" | docker login -u "$DOCKER_ID" --password-stdin 
-  - docker push home1docker1/react_multiapp_client
-  - docker push home1docker1/react_multiapp_worker
-  - docker push home1docker1/react_multiapp_server
-  - docker push home1docker1/react_multiapp_nginx
+  - docker push home1docker1/react_multiapp_client:1.0.0
+  - docker push home1docker1/react_multiapp_worker:1.0.0
+  - docker push home1docker1/react_multiapp_server:1.0.0
+  - docker push home1docker1/react_multiapp_nginx:1.0.0
 
 deploy:
   provider: elasticbeanstalk

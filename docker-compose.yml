@@ -3,12 +3,12 @@
     services:
 
       client:
-        image: "home1docker1/react_multiapp_client"
+        image: "home1docker1/react_multiapp_client:1.0.0"
         mem_limit: 128m
         hostname: client
 
       server:
-        image: "home1docker1/react_multiapp_server"
+        image: "home1docker1/react_multiapp_server:1.0.0"
         mem_limit: 128m
         hostname: api
         environment:
@@ -21,7 +21,7 @@
           - PGPORT=$PGPORT
 
       worker:
-        image: "home1docker1/react_multiapp_worker"
+        image: "home1docker1/react_multiapp_worker:1.0.0"
         mem_limit: 128m
         hostname: worker
         environment:
@@ -29,7 +29,7 @@
           - REDIS_PORT=$REDIS_PORT
 
       nginx:
-        image: "home1docker1/react_multiapp_nginx"
+        image: "home1docker1/react_multiapp_nginx:1.0.0"
         mem_limit: 128m
         hostname: nginx
         ports:
