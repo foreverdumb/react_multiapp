@@ -16,3 +16,15 @@ after_success:
   - docker push home1docker1/react_multiapp_worker
   - docker push home1docker1/react_multiapp_server
   - docker push home1docker1/react_multiapp_nginx
+
+deploy:
+  provider: elasticbeanstalk
+  region: "eu-central-1"
+  app: "react_multiapp"
+  env: "Reactmultiapp-env"
+  bucket_name: "elasticbeanstalk-eu-central-1-279955776817"
+  bucket_path: "react_multiapp"
+  on:
+    branch: main
+  access_key_id: $AWS_EB_ACCESS_KEY
+  secret_access_key: "$AWS_EB_SECRET"
