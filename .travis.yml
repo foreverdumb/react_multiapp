@@ -1,30 +1,36 @@
 sudo: required
+language: generic
 
-before_install: 
-  - cd ./client; docker build -f Dockerfile.dev -t react_multiapp_client .
+services:
+  - docker
 
-script: 
-  - docker run -e CI=true react_multiapp_client npm run test
+before_install:
+  - docker build -t stephengrider/react-test -f ./client/Dockerfile.dev ./client
 
-after_success: 
-  - docker build -f Dockerfile -t home1docker1/react_multiapp_client:1.0.0 .
-  - cd ..; cd ./worker; docker build -f Dockerfile.dev -t home1docker1/react_multiapp_worker:1.0.0 .
-  - cd ..; cd ./server; docker build -f Dockerfile.dev -t home1docker1/react_multiapp_server:1.0.0 .
-  - cd ..; cd ./nginx; docker build -f Dockerfile.dev -t home1docker1/react_multiapp_nginx:1.0.0 .
-  - echo "$DOCKER_HUB_PASS" | docker login -u "$DOCKER_ID" --password-stdin 
-  - docker push home1docker1/react_multiapp_client:1.0.0
-  - docker push home1docker1/react_multiapp_worker:1.0.0
-  - docker push home1docker1/react_multiapp_server:1.0.0
-  - docker push home1docker1/react_multiapp_nginx:1.0.0
+script:
+  - docker run -e CI=true stephengrider/react-test npm test
+
+after_success:
+  - docker build -t stephengrider/multi-client ./client
+  - docker build -t stephengrider/multi-nginx ./nginx
+  - docker build -t stephengrider/multi-server ./server
+  - docker build -t stephengrider/multi-worker ./worker
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push stephengrider/multi-client
+  - docker push stephengrider/multi-nginx
+  - docker push stephengrider/multi-server
+  - docker push stephengrider/multi-worker
 
 deploy:
   provider: elasticbeanstalk
-  region: "eu-central-1"
-  app: "react_multiapp"
-  env: "Reactmultiapp-env"
-  bucket_name: "elasticbeanstalk-eu-central-1-279955776817"
-  bucket_path: "react_multiapp"
+  region: 'us-east-1'
+  app: 'multi-docker'
+  env: 'MultiDocker-env'
+  bucket_name: 'elasticbeanstalk-us-east-1-923445559289'
+  bucket_path: 'docker-multi'
   on:
     branch: main
-  access_key_id: $AWS_EB_ACCESS_KEY
-  secret_access_key: $AWS_EB_SECRET
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
