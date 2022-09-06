@@ -10,4 +10,4 @@ after_success:
   - docker build -f Dockerfile.dev -t react_multiapp_client .
   - cd ..; cd ./worker; docker build -f Dockerfile.dev -t react_multiapp_worker .
   - cd ..; cd ./server; docker build -f Dockerfile.dev -t react_multiapp_server .
-  - cd ..; cd ./ngnix; docker build -f Dockerfile.dev -t react_multiapp_nginx .
+  - cd ..; cd ./nginx; docker build -f Dockerfile.dev -t react_multiapp_nginx .
