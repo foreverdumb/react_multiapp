@@ -4,6 +4,8 @@ services:
     image: "home1docker1/multi-client"
     mem_limit: 128m
     hostname: client
+    ports:
+      - 3000:3000
   server:
     image: "home1docker1/multi-server"
     mem_limit: 128m
