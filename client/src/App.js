@@ -19,6 +19,7 @@ function App() {
           >
             Learn React
           </a>
+          <h1>Hey we have updated the app!</h1>
           <Link to="/">Home</Link>
           <Link to="/otherpage">Other Page</Link>
         </header>
